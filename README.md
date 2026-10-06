@@ -220,3 +220,11 @@ The app is a static Vite build; [`vercel.json`](vercel.json) pins the settings.
 3. No environment variables are needed.
 
 Or from the command line: `npx vercel` (preview) / `npx vercel --prod`.
+
+## Deploying to GitHub Pages
+
+This repository deploys to GitHub Pages through GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)).
+
+- Every push to `main` (or a manual **Run workflow**) installs with `npm ci`, runs `npm test`, then builds and deploys `dist` using the official GitHub Pages actions. A failing test stops the deployment.
+- Pages serves the site from `/leap/`, so the workflow builds with `BASE_PATH=/leap/`. Without that variable, `vite.config.ts` falls back to `/`, so local and Vercel builds are unaffected.
+- One-time setup: in the repository's **Settings → Pages**, set **Source** to **GitHub Actions**.
